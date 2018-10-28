@@ -76,21 +76,21 @@ const includes = (arr, targ) => {
   }
 }
 
-// let targArr = [3, 5, 7, 3, 7, 9];
-// console.log(includes(targArr, 9))
+let targArry = [3, 5, 7, 3, 7, 9];
+// console.log(includes(targArry, 9))
 
 // QUESTION 13:
 
 const getMiddle = (str) => {
   str = str.split('');
-  midOdd = str.length/2;
-  midEven = ((midOdd - 1), (midOdd));
+  midOdd = Math.floor(str.length/2);
+  midEven = (str[str.length/2 - 1] += str[str.length/2]);
 
   for (let i = 0; i < str.length; i++) {
-    if (str % 2) {
+    if (str.length % 2) {
       return str[midOdd];
     } else {
-      return str[midOdd], str[midOdd-1]
+      return midEven
     }
   }
 }
@@ -98,19 +98,30 @@ const getMiddle = (str) => {
 // console.log(getMiddle('apples'))
 
 // QUESTION 14: **
+const palindromeSubstrings = (str) => {
+  let result = [];
+  for (let i = 0; i < str.length; i++) {
+    for (let j = i + 1; j < str.length + 1; j++) {
+      result.push(str.slice(i, j));
+    }
+  }
+  return result;
+}
+
+// console.log(palindromeSubstrings("Rat star"))
 
 // QUESTION 15: **
 
 const disemvowel = (str) => {
-  str = str.split('');
+  let result = '';
+  let vowels = ['a', 'e', 'i', 'o', 'u'];
 
-  let remove = str.filter(el => {
-    let vowels = ['a', 'e', 'i', 'o', 'u'];
-    if (el !== vowels) {
-      return el;
-    }
-  })
-  return remove;
+  for (let i = 0; i < str.length; i++) {
+      if (!vowels.includes(str[i])) {
+        result += str[i];
+      }
+  }
+  return result;
 }
 
 // console.log(disemvowel('Belly jelly'));
@@ -119,17 +130,16 @@ const disemvowel = (str) => {
 
 const targetIndices = (arr, targ) => {
 
-  let target = arr.reduce((acc, currEl) => {
-    if (acc + currEl === targ) {
-      return (acc, currEl)
-    }
-  })
-  return target;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr.includes(targ))
+    return true;
+  }
+  return false;
 }
 
 let targArr = [3, 5, 7, 3, 7, 9];
 
-// console.log(targetIndices(targArr, 8));
+// console.log(targetIndices(targArr, 9));
 
 // QUESTION 17:
 
@@ -193,6 +203,8 @@ let ages = [22, 32, 21, 45, 38];
 // console.log(getAverageAge(ages))
 
 // QUESTION 27: **
+// rotate
+
 
 // QUESTION 28:
 
@@ -250,6 +262,20 @@ const numberTimesIdx = (arr) => {
 // QUESTION 33:
 // MY FLATTEN
 
+Array.prototype.myFlatten = function() {
+  let output = [];
+  for (let i = 0; i < this.length; i++) {
+    if (Array.isArray(this[i])) {
+      output = output.concat(this[i].myFlatten());
+    } else {
+      output.push(this[i])
+    }
+  }
+  return output;
+}
+
+// console.log([1,2, [3, 4, [5, 6]]].myFlatten())
+
 // QUESTION 34:
 // forEach
 
@@ -301,19 +327,181 @@ let reduced = eachArr.myReduce((acc, currEl) => {return acc + currEl})
 // QUESTION 37:
 // myEvery
 
+Array.prototype.myEvery = function(callback) {
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i])) {
+      return true;
+    }
+    return false;
+  }
+}
 
+let randNumArr = [2, 3, 3, 2, 5, 70];
+
+const greaterThan10 = (num) => {
+  return num > 10;
+};
+
+let meh = randNumArr.myEvery(greaterThan10);
+
+// console.log(meh);
 
 // QUESTION 38:
 // mySome
 
+Array.prototype.mySome = function() {
+  return false;
+  if (this[i], i, this) {
+    return true
+  }
+}
+
+let mehh = randNumArr.mySome(greaterThan10);
+console.log(mehh)
+
 // QUESTION 39:
 // myFilter
+
+Array.prototype.myFilter = function(callback) {
+  let newArr = [];
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i)) {
+      newArr.push(this[i]);
+    }
+  }
+  return newArr;
+}
+
+let odds = [1, 2, 3, 4, 5].myFilter(el => {
+  return el % 2;
+});
+// console.log(odds);
 
 // QUESTION 40:
 // myTranspose
 
+Array.prototype.myTranspose = function() {
+  let grid = [];
+  for (let i = 0; i < this.length; i++) {
+    grid[i] = [];
+    for (let j = 0; j < this.length; j++) {
+      grid[i][j] = this[j][i];
+    }
+  }
+  return grid;
+}
+
+let mtx = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+// console.log(mtx.myTranspose())
+
 // QUESTION 41:
 // myJoin
 
+Array.prototype.myJoin = function(joiner = '') {
+  let output = '';
+  for (let i = 0; i < this.length; i++) {
+    output += this[i];
+
+    if (i !== this.length - 1) {
+      output += joiner;
+  }
+  }
+  return output;
+}
+
+let anArr = [1, 2, 3];
+// console.log(anArr.myJoin(' '))
+
 // QUESTION 42:
 // mySlice
+
+String.prototype.mySlice = function(start, end = this.length) {
+  let str = '';
+
+  for (let i = start; i < end && i < this.length; i++) {
+      str += this[i];
+    }
+    return str;
+  }
+  let thisIsStr = 'this is a string';
+  // console.log(thisIsStr.mySlice(1, 4))
+
+
+const secLargest = (arr) => {
+  let largest = Number.NEGATIVE_INFINITY;
+  let secondLargest;
+
+  for (let i = 0; i < arr.length; i++) {
+      if (arr[i] > largest) {
+        secondLargest = largest;
+        largest = arr[i];
+      } else {
+        if (secondLargest < arr[i]) {
+          secondLargest = arr[i];
+        }
+      }
+  }
+  return secondLargest;
+}
+
+let arr = [1, 4, 3, 76, 43, 0];
+// console.log(secLargest(arr))
+
+
+const rotate = (arr, shift = 1) => {
+  if (shift > 0) {
+    for (let i = 0; i < shift % arr.length; i++) {
+      let shifted = arr.shift();
+      arr.push(shifted);
+    }
+    if (shift < 0) {
+    for (let i = 0; i > shift % arr.length; i--) {
+      let popped = arr.pop();
+      arr.unshift(popped);
+    }
+    }
+    return arr;
+  }
+}
+
+// console.log(rotate(arr, 2));
+
+Array.prototype.myReduce = function(callback, initialValue) {
+  let startVal = 0;
+  if (!initialValue) {
+      initialValue = startVal;
+      startVal++;
+  }
+  for (let i = initialValue; i < this.length; i++) {
+    initialValue = callback(initialValue, this[i]);
+  }
+  return initialValue;
+}
+
+let reducee = [1, 2, 3, 4].myReduce((el, currEl) => {
+  return el + currEl;
+});
+
+// console.log(reducee);
+
+const secondLargest2 = (arr) => {
+  // first idx of arr to keep track of largest [accCopy];
+  // sec idx of arr to keep track of sec largest [accCopy]
+
+  let largAndsecLarg = arr.reduce((acc, el) => {
+    let accCopy = acc;
+    if (acc[0] === undefined || el > acc[0]) {
+      accCopy[1] = accCopy[0];
+      accCopy[0] = el;
+
+      // 'else if' so the loop isn't just changing the result to sec larg
+      // -- which a simple 'if' statement would do
+
+    } else if (acc[1] === undefined || el > acc[1]) {
+      accCopy[1] = el;
+    }
+    return accCopy;
+  }, [])
+  return largAndsecLarg
+}
+// console.log(secondLargest2([3, 1, 2, 6, 44, 0, 23]))
